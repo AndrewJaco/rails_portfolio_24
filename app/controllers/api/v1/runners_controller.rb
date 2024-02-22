@@ -1,4 +1,4 @@
-class RunnersController < ApplicationController
+class Api::V1::RunnersController < ApplicationController
   before_action :set_runner, only: %i[ show update destroy ]
 
   # GET /runners
