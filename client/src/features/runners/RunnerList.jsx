@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { API_URL } from '../../constants'
+import { Link } from 'react-router-dom'
 
 function RunnerList() {
   const [runners, setRunners] = useState([])
@@ -30,7 +31,9 @@ function RunnerList() {
     <div>
       {runners.map(runner => (
         <div key={runner.id}>
-          <h2>{runner.name}</h2>
+          <Link to={`/runners/${runner.id}`}>
+            <h2>{runner.name}</h2>  
+          </Link>
           <p>{runner.age}</p>
         </div>
       ))}
