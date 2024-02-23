@@ -18,7 +18,7 @@ class Api::V1::RunnersController < ApplicationController
     @runner = Runner.new(runner_params)
 
     if @runner.save
-      render json: @runner, status: :created, location: @runner
+      render json: @runner, status: :created, location: api_v1_runner_url(@runner)
     else
       render json: @runner.errors, status: :unprocessable_entity
     end
