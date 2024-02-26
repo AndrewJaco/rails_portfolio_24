@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
-import { API_URL } from '../../constants'
+import { fetchRunner as fetchRunnerService, deleteRunner as deleteRunnerService } from '../../services/runnerService'
+
 
 function RunnerDetails() {
   const [ runner, setRunner ] = useState(null)
@@ -10,13 +11,8 @@ function RunnerDetails() {
   useEffect(() => {
     async function fetchRunner() {
       try {
-        const response = await fetch(`${API_URL}/${id}`)
-        if (response.ok) {
-          const data = await response.json()
-          setRunner(data)
-        } else {
-          throw response
-        }
+        const data = await fetchRunnerService(id)
+        setRunner(data)
       } catch (error) {
         console.error(error)
       }
@@ -26,16 +22,10 @@ function RunnerDetails() {
 
   const deleteRunner = async () => {
     try {
-      const response = await fetch(`${API_URL}/${id}`, {
-        method: 'DELETE'
-      })
-      if (response.ok) {
-        navigate('/runners')
-      } else {
-        throw response
-      }
+      await deleteRunnerService(id)
+      navigate('/runners')
     } catch (error) {
-      console.error(error)
+      console.error("failed to delete the runner", error)
     }
   }
 
