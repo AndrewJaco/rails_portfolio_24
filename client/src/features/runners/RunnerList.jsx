@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { API_URL } from '../../constants'
 import { Link } from 'react-router-dom'
+import { fetchAllRunners, deleteRunner } from '../../services/runnerService'
 
 function RunnerList() {
   const [runners, setRunners] = useState([])
@@ -9,14 +9,9 @@ function RunnerList() {
   useEffect(() => {
     async function fetchRunners() {
       try {
-        const response = await fetch(API_URL)
-        if (response.ok) {
-          const data = await response.json()
-          setRunners(data)
-          setLoading(false)
-        } else {
-        throw response
-        }
+        const data = await fetchAllRunners();
+        setRunners(data)
+        setLoading(false)
       } catch (error) {
         console.error(error)
         setLoading(false)
@@ -27,17 +22,12 @@ function RunnerList() {
     fetchRunners()
   }, [])
 
-  const deleteRunner = async id => {
+  const deleteRunnerHandler = async id => {
     try {
-      const response = await fetch(`${API_URL}/${id}`, {
-        method: 'DELETE'
-      })
-      if (response.ok) {
-        const updatedRunners = runners.filter(runner => runner.id !== id)
-        setRunners(updatedRunners)
-      }
+     await deleteRunner(id);
+     setRunners(runners.filter(runner => runner.id !== id))
     } catch (error) {
-      console.error(error)
+      console.error("failed to delete runner", error)
     }
   }
 
@@ -51,7 +41,7 @@ function RunnerList() {
           <div className='runner-links'>
             <Link to={`/runners/${runner.id}/edit`}>Edit</Link>
             {" | "}
-            <button onClick={()=> deleteRunner(runner.id)}>Delete</button>
+            <button onClick={()=> deleteRunnerHandler(runner.id)}>Delete</button>
           </div>
         </div>
       ))}
