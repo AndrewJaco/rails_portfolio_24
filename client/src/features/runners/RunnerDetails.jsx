@@ -46,7 +46,7 @@ function RunnerDetails() {
       <h2>{runner.name}</h2>
       <p>age: {runner.age}</p>
       <Link to={`/runners/${id}/edit`}>Edit</Link>
-      <br />
+      {" | "}
       <Link to='/runners'>Back to runners</Link>
       {" | "}
       <button onClick={deleteRunner}>Delete</button>

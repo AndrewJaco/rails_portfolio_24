@@ -49,6 +49,8 @@ function RunnerList() {
             <h2>{runner.name}</h2>  
           </Link>
           <div className='runner-links'>
+            <Link to={`/runners/${runner.id}/edit`}>Edit</Link>
+            {" | "}
             <button onClick={()=> deleteRunner(runner.id)}>Delete</button>
           </div>
         </div>
