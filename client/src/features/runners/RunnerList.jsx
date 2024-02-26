@@ -27,6 +27,20 @@ function RunnerList() {
     fetchRunners()
   }, [])
 
+  const deleteRunner = async id => {
+    try {
+      const response = await fetch(`${API_URL}/${id}`, {
+        method: 'DELETE'
+      })
+      if (response.ok) {
+        const updatedRunners = runners.filter(runner => runner.id !== id)
+        setRunners(updatedRunners)
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <div>
       {runners.map(runner => (
@@ -34,7 +48,9 @@ function RunnerList() {
           <Link to={`/runners/${runner.id}`}>
             <h2>{runner.name}</h2>  
           </Link>
-          <p>{runner.age}</p>
+          <div className='runner-links'>
+            <button onClick={()=> deleteRunner(runner.id)}>Delete</button>
+          </div>
         </div>
       ))}
     </div>
