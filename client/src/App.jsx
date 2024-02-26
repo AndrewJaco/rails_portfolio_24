@@ -10,8 +10,8 @@ function App() {
   return (
     <Router>
       <div className='app'>
-        <h1>Andrew Jacobus</h1>
-        <p>a runner's programmer</p>
+        <h1>Run Journal Pro</h1>
+        <p>keep running</p>
         <NavBar />
         <AppRoutes />
       </div>
