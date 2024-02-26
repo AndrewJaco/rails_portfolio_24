@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { API_URL } from '../../constants'
+import { createRunner } from '../../services/runnerService'
 
 function NewRunnerForm() {
   const [name, setName] = useState('')
@@ -10,19 +10,12 @@ function NewRunnerForm() {
   const handleSubmit = async e => {
     e.preventDefault()
     const newRunner = { name, age }
-    const response = await fetch(API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newRunner)
-
-    })
-    if (response.ok) {
-      const {id} = await response.json()
-      navigate(`/runners/${id}`)
-    } else {
-      console.error('Failed to create runner')
+    try {
+      const response = await createRunner(newRunner)
+      navigate(`/runners/${response.id}`)
+    }
+    catch (error) {
+      console.error("failed to create runner", error)
     }
   }
 

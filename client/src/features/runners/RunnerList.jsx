@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { fetchAllRunners, deleteRunner as deleteRunnerService } from '../../services/runnerService'
+import { fetchAllRunners, deleteRunner } from '../../services/runnerService'
 
 function RunnerList() {
   const [runners, setRunners] = useState([])
@@ -22,9 +22,9 @@ function RunnerList() {
     fetchRunners()
   }, [])
 
-  const deleteRunner = async id => {
+  const deleteRunnerHandler = async id => {
     try {
-     await deleteRunnerService(id);
+     await deleteRunner(id);
      setRunners(runners.filter(runner => runner.id !== id))
     } catch (error) {
       console.error("failed to delete runner", error)
@@ -41,7 +41,7 @@ function RunnerList() {
           <div className='runner-links'>
             <Link to={`/runners/${runner.id}/edit`}>Edit</Link>
             {" | "}
-            <button onClick={()=> deleteRunner(runner.id)}>Delete</button>
+            <button onClick={()=> deleteRunnerHandler(runner.id)}>Delete</button>
           </div>
         </div>
       ))}

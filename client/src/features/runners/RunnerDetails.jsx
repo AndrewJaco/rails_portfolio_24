@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
-import { fetchRunner as fetchRunnerService, deleteRunner as deleteRunnerService } from '../../services/runnerService'
+import { fetchRunner, deleteRunner } from '../../services/runnerService'
 
 
 function RunnerDetails() {
@@ -9,20 +9,20 @@ function RunnerDetails() {
   const navigate = useNavigate()
   
   useEffect(() => {
-    async function fetchRunner() {
+    async function fetchRunnerHandler() {
       try {
-        const data = await fetchRunnerService(id)
-        setRunner(data)
+        const json = await fetchRunner(id)
+        setRunner(json)
       } catch (error) {
         console.error(error)
       }
     }
-    fetchRunner()
+    fetchRunnerHandler()
   }, [id])
 
-  const deleteRunner = async () => {
+  const deleteRunnerHandler = async () => {
     try {
-      await deleteRunnerService(id)
+      await deleteRunner(id)
       navigate('/runners')
     } catch (error) {
       console.error("failed to delete the runner", error)
@@ -39,7 +39,7 @@ function RunnerDetails() {
       {" | "}
       <Link to='/runners'>Back to runners</Link>
       {" | "}
-      <button onClick={deleteRunner}>Delete</button>
+      <button onClick={deleteRunnerHandler}>Delete</button>
     </div>
   )
 }

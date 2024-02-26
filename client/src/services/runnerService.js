@@ -18,6 +18,35 @@ async function fetchRunner(id) {
   }
 }
 
+async function createRunner(runner) {
+  const response = await fetch(API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(runner)
+  });
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+  return response.json();
+}
+
+async function updateRunner(id, runner) {
+  const response = await fetch(`${API_URL}/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(runner)
+  });
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+  return response.json();
+
+}
+
 async function deleteRunner(id) {
   const response = await fetch(`${API_URL}/${id}`, {
     method: 'DELETE'
@@ -33,4 +62,4 @@ async function deleteRunner(id) {
 }
 
 
-export { fetchAllRunners, deleteRunner, fetchRunner };
+export { fetchAllRunners, deleteRunner, fetchRunner, createRunner, updateRunner };
