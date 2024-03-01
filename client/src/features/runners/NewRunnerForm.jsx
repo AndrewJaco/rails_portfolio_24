@@ -1,17 +1,13 @@
-import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { createRunner } from '../../services/runnerService'
+import RunnerForm from '../../components/RunnerForm'
 
 function NewRunnerForm() {
-  const [name, setName] = useState('')
-  const [age, setAge] = useState('')
   const navigate = useNavigate()
 
-  const handleSubmit = async e => {
-    e.preventDefault()
-    const newRunner = { name, age }
+  const handleCreateSubmit = async (formData) => {
     try {
-      const response = await createRunner(newRunner)
+      const response = await createRunner(formData)
       navigate(`/runners/${response.id}`)
     }
     catch (error) {
@@ -21,34 +17,11 @@ function NewRunnerForm() {
 
 
   return (
-    <div>
-      <h2>Create a New Runner</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor='nameInput'>Name</label>
-          <input
-            id='nameInput'
-            type='text'
-            value={name}
-            onChange={e => setName(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor='ageInput'>Age</label>
-          <input
-            id='ageInput'
-            type='number'
-            value={age}
-            onChange={e => setAge(e.target.value)}
-            required
-          />
-        </div>  
-        <div>
-          <button type='submit'>Create Runner</button>
-        </div>
-      </form>  
-    </div>
+   <RunnerForm 
+    headerText="New Runner" 
+    buttonText="Create Runner" 
+    onSubmit={handleCreateSubmit}
+    />
   )
 }
 
