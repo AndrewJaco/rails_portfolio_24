@@ -4,7 +4,8 @@ function RunnerForm({ runner, headerText, buttonText, onSubmit }) {
   const [formData, setFormData] = useState(
     runner || {
       name: '',
-      age: ''
+      age: '',
+      image: '',
     }
   )
 
@@ -22,6 +23,15 @@ function RunnerForm({ runner, headerText, buttonText, onSubmit }) {
             type='text'
             value={formData.name}
             onChange={e => setFormData({...formData, name: e.target.value})}
+          />
+        </div>
+        <div>
+          <label htmlFor='imageInput'>Image:</label>
+          <input
+            id='imageInput'
+            type='file'
+            accept='image/*'
+            onChange={e => setFormData({...formData, image: e.target.files[0]})}
           />
         </div>
         <div>
