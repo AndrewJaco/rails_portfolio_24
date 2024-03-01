@@ -21,10 +21,7 @@ async function fetchRunner(id) {
 async function createRunner(runner) {
   const response = await fetch(API_URL, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(runner)
+    body: runner
   });
   if (!response.ok) {
     throw new Error(response.statusText);

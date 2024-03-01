@@ -5,7 +5,12 @@ import RunnerForm from '../../components/RunnerForm'
 function NewRunnerForm() {
   const navigate = useNavigate()
 
-  const handleCreateSubmit = async (formData) => {
+  const handleCreateSubmit = async (rawData) => {
+    const formData = new FormData()
+    formData.append('runner[name]', rawData.name)
+    formData.append('runner[age]', rawData.age)
+    formData.append('runner[image]', rawData.image)
+
     try {
       const response = await createRunner(formData)
       navigate(`/runners/${response.id}`)
