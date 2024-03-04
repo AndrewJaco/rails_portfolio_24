@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import { fetchAllRunners, deleteRunner } from '../../services/runnerService'
+import RunnerCard from '../../components/RunnerCard'
 
 function RunnerList() {
   const [runners, setRunners] = useState([])
@@ -31,18 +31,13 @@ function RunnerList() {
     }
   }
 
+  if (loading) return <h1>Loading...</h1>
+
   return (
     <div>
       {runners.map(runner => (
         <div key={runner.id}>
-          <Link to={`/runners/${runner.id}`}>
-            <h2>{runner.name}</h2>  
-          </Link>
-          <div className='runner-links'>
-            <Link to={`/runners/${runner.id}/edit`}>Edit</Link>
-            {" | "}
-            <button onClick={()=> deleteRunnerHandler(runner.id)}>Delete</button>
-          </div>
+          <RunnerCard runner={runner} deleteRunnerHandler={deleteRunnerHandler} />
         </div>
       ))}
     </div>

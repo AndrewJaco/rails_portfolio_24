@@ -1,0 +1,61 @@
+.runner-card-container{
+  border: 2px solid black;
+  display: flex;
+  padding: 1em;
+  margin: 1em;
+}
+
+.title-container-link {
+  text-decoration: none;
+  color: black;
+}
+
+.runner-title {
+  display: flex;
+  margin-right: auto;
+}
+
+.profile-pic,
+.avatar {
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #000;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+  display: block;
+}
+
+.avatar {
+  height: 80px;
+  margin-right: 1em;
+}
+
+.profile-pic {
+  height: 300px;
+  margin: auto;
+  margin-top: 2em;
+}
+
+.other-links {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .25em;
+}
+
+.edit-button {
+  text-decoration: none;
+  font-weight: 500;
+  line-height: normal;
+  color: black !important;
+  padding: .6em 1.2em;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  border: 1px solid transparent;
+  transition: border-color 0.25s;
+}
+
+.edit-button:hover {
+  border-color: #646cff;
+}

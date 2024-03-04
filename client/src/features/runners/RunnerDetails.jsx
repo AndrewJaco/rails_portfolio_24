@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { fetchRunner, deleteRunner } from '../../services/runnerService'
-
+import ProfilePic from '../../components/ProfilePic'
 
 function RunnerDetails() {
   const [ runner, setRunner ] = useState(null)
@@ -33,6 +33,7 @@ function RunnerDetails() {
 
   return (
     <div>
+      <ProfilePic type="profile-pic" src={runner.image_url} alt={runner.name} />
       <h2>{runner.name}</h2>
       <p>age: {runner.age}</p>
       <Link to={`/runners/${id}/edit`}>Edit</Link>
