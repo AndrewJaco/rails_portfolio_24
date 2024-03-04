@@ -26,7 +26,7 @@ function RunnerForm({ runner, headerText, buttonText, onSubmit }) {
           />
         </div>
         <div>
-          <label htmlFor='imageInput'>Image:</label>
+          <label htmlFor='imageInput'>Profile Pic:</label>
           <input
             id='imageInput'
             type='file'
