@@ -1,17 +1,14 @@
 import { useNavigate } from 'react-router-dom'
 import { createRunner } from '../../services/runnerService'
 import RunnerForm from '../../components/RunnerForm'
+import objectToFormData from '../../utils/formDataHelper'
 
 function NewRunnerForm() {
   const navigate = useNavigate()
 
   const handleCreateSubmit = async (rawData) => {
-    const formData = new FormData()
-    formData.append('runner[name]', rawData.name)
-    formData.append('runner[age]', rawData.age)
-    formData.append('runner[image]', rawData.image)
-
     try {
+      const formData = objectToFormData({ runner: rawData })
       const response = await createRunner(formData)
       navigate(`/runners/${response.id}`)
     }
