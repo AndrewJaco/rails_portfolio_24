@@ -32,10 +32,7 @@ async function createRunner(runner) {
 async function updateRunner(id, runner) {
   const response = await fetch(`${API_URL}/${id}`, {
     method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(runner)
+    body: runner,
   });
   if (!response.ok) {
     throw new Error(response.statusText);
