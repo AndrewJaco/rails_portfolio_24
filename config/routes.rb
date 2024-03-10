@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   # API routes should be in /api/v1/... and should be namespaced
   namespace :api do
     namespace :v1 do
+      get 'search/runners'
       resources :runners
     end
   end

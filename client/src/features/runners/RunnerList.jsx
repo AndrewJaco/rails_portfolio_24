@@ -1,26 +1,35 @@
 import { useState, useEffect } from 'react'
-import { fetchAllRunners, deleteRunner } from '../../services/runnerService'
+import { deleteRunner } from '../../services/runnerService'
 import RunnerCard from '../../components/RunnerCard'
+
+import SearchBar from './SearchBar'
+import useUrlSearchParams from '../../hooks/useUrlSearchParams'
+import useRunnersData from '../../hooks/useRunnersData'
 
 function RunnerList() {
   const [runners, setRunners] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [searchTerm, setSearchTerm] = useState('')
+  const [debounceSearchTerm, setDebounceSearchTerm] = useUrlSearchParams('search')
   
+  const {
+    runners: fetchedRunners,
+    loading,
+    error,
+  } = useRunnersData(debounceSearchTerm)
+
   useEffect(() => {
-    async function fetchRunners() {
-      try {
-        const data = await fetchAllRunners();
-        setRunners(data)
-        setLoading(false)
-      } catch (error) {
-        console.error(error)
-        setLoading(false)
-      } finally {
-        setLoading(false)
-      }
+    if(fetchedRunners) {
+      setRunners(fetchedRunners)
     }
-    fetchRunners()
-  }, [])
+  }, [fetchedRunners])
+
+  const handleImmediateSearchChange = (searchValue) => {
+    setSearchTerm(searchValue)
+  }
+
+  const handleDebounceSearchChange = (searchValue) => {
+    setDebounceSearchTerm(searchValue)
+  }
 
   const deleteRunnerHandler = async id => {
     try {
@@ -35,6 +44,11 @@ function RunnerList() {
 
   return (
     <div>
+      <SearchBar
+        value={searchTerm}
+        onSearchChange={handleDebounceSearchChange}
+        onImmedianteChange={handleImmediateSearchChange}
+      />
       {runners.map(runner => (
         <div key={runner.id}>
           <RunnerCard runner={runner} deleteRunnerHandler={deleteRunnerHandler} />
