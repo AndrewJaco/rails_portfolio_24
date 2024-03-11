@@ -5,23 +5,39 @@ import RunnerCard from '../../components/RunnerCard'
 import SearchBar from './SearchBar'
 import useUrlSearchParams from '../../hooks/useUrlSearchParams'
 import useRunnersData from '../../hooks/useRunnersData'
+import Pagination from './Pagination'
+import { useSearchParams } from 'react-router-dom'
 
 function RunnerList() {
   const [runners, setRunners] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [debounceSearchTerm, setDebounceSearchTerm] = useUrlSearchParams('search')
+
+  const [searchParams, setSearchParams] = useSearchParams()
+  const initialPageFromUrl = Number(searchParams.get('page')) || 1
+  const [currentPage, setCurrentPage] = useState(initialPageFromUrl || 1)
   
   const {
     runners: fetchedRunners,
     loading,
     error,
-  } = useRunnersData(debounceSearchTerm)
+    totalRunners, 
+    perPage
+  } = useRunnersData(debounceSearchTerm, currentPage)
 
   useEffect(() => {
     if(fetchedRunners) {
       setRunners(fetchedRunners)
     }
   }, [fetchedRunners])
+
+  useEffect(() => {
+    const initialSearchTerm = searchParams.get('search') || ''
+    setSearchTerm(initialSearchTerm)
+
+    const pageFromURL = searchParams.get('page') || 1
+    setCurrentPage(Number(pageFromURL))
+  }, [searchParams])
 
   const handleImmediateSearchChange = (searchValue) => {
     setSearchTerm(searchValue)
@@ -40,6 +56,11 @@ function RunnerList() {
     }
   }
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page)
+    setSearchParams({ search: debounceSearchTerm, page })
+  }
+
   if (loading) return <h1>Loading...</h1>
 
   return (
@@ -48,6 +69,12 @@ function RunnerList() {
         value={searchTerm}
         onSearchChange={handleDebounceSearchChange}
         onImmedianteChange={handleImmediateSearchChange}
+      />
+      <Pagination 
+        currentPage={currentPage}
+        totalRunners={totalRunners} 
+        runnersPerPage={perPage}
+        onPageChange={handlePageChange}
       />
       {runners.map(runner => (
         <div key={runner.id}>
