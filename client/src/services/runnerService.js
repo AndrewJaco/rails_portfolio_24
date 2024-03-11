@@ -1,7 +1,7 @@
 import { RUNNERS_API_URL, SEARCH_API_URL } from "../constants";
 
-async function fetchAllRunners() {
-  const response = await fetch(RUNNERS_API_URL);
+async function fetchAllRunners(page = 1) {
+  const response = await fetch(`${RUNNERS_API_URL}/?page=${page}`);
   if (!response.ok) {
     throw response;
   } else {
@@ -55,8 +55,8 @@ async function deleteRunner(id) {
     return response.json();
 }
 
-async function searchRunners(query) {
-  const response = await fetch(`${SEARCH_API_URL}/runners/?q=${query}`);
+async function searchRunners(query, page = 1) {
+  const response = await fetch(`${SEARCH_API_URL}/runners/?q=${query}&page=${page}`);
   if (!response.ok) {
     throw new Error(response.statusText);
   }

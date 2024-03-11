@@ -3,17 +3,16 @@ class Api::V1::RunnersController < ApplicationController
 
   # GET /runners
   def index
+    runners_per_page = 10
     @runners = Runner.order(created_at: :desc)
-
-    runners_with_image = @runners.map do |runner|
-      if runner.image.attached?
-        runner.as_json.merge(image_url: url_for(runner.image))
-      else
-        runner.as_json.merge(image_url: nil)
-      end
-    end
+    runners_with_images = paginate_runners(@runners, runners_per_page)
+    total_runners_count = Runner.count
     
-    render json: runners_with_image
+    render json: {
+      runners: runners_with_images,
+      total_count: total_runners_count,
+      per_page: runners_per_page
+    }
   end
 
   # GET /runners/1
