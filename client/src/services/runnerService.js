@@ -63,5 +63,4 @@ async function searchRunners(query, page = 1) {
   return response.json();
 }
 
-
 export { fetchAllRunners, deleteRunner, fetchRunner, createRunner, updateRunner, searchRunners };

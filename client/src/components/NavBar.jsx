@@ -8,6 +8,10 @@ function NavBar() {
       <Link to='/runners'>Runners</Link>
        | 
       <Link to='/new'>New Runner</Link>
+      |
+      <Link to='/login'>Login</Link>
+      |
+      <Link to='/signup'>Sign up</Link>
     </nav>
   )
 }
