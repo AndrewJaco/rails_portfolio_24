@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types'
 
-function Pagination({ currentPage, totalRunners, runnersPerPage, onPageChange }) {
-  const totalPages = Math.ceil(totalRunners / runnersPerPage)
-
+function Pagination({ currentPage, onPageChange, totalPages }) {
   const handlePrevious = () => {
     if(currentPage > 1) {
       onPageChange(currentPage - 1)
@@ -69,8 +67,6 @@ function Pagination({ currentPage, totalRunners, runnersPerPage, onPageChange })
 
 Pagination.propTypes = {
   currentPage: PropTypes.number.isRequired,
-  totalPages: PropTypes.number.isRequired,
-  runnersPerPage: PropTypes.number.isRequired,
   onPageChange: PropTypes.func.isRequired,
 }
 

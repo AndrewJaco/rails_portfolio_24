@@ -72,9 +72,8 @@ function RunnerList() {
       />
       <Pagination 
         currentPage={currentPage}
-        totalRunners={totalRunners} 
-        runnersPerPage={perPage}
         onPageChange={handlePageChange}
+        totalPages={Math.ceil(totalRunners / perPage)}
       />
       {runners.map(runner => (
         <div key={runner.id}>
